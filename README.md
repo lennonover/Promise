@@ -1,2 +1,3 @@
 # Promise
-Promise模式学习Demo
+
+##Promise模式学习记录
