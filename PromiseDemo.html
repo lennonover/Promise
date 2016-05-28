@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<h1>Promise</h1>
+<script type="text/javascript">
+	// 假设一个场景，每隔一秒依次打印1、2、3
+// :evergreen_tree:用嵌套回调函数的写法
+function log(data, cb) {
+    setTimeout(function(){
+        console.log(data);
+        if(cb) {
+            cb();
+        }
+    }, 1000);
+}
+log(1, function(){
+    log(2, function(){
+        log(3);
+    })
+})
+//用这种方式，如果继续打印4、5、6...就会嵌套越来越深，
+//代码会变得很丑陋而且不好维护。
+
+//:evergreen_tree:用Promise的写法
+function log(data) {
+    return new Promise(function(resolve) {
+        setTimeout(function() {
+            console.log(data);
+            resolve();
+        }, 1000)
+    })
+}
+log(1)
+.then(function() {
+    return log(2);//返回Promise
+})
+.then(function() {
+    return log(3);
+})
+//用Promise的方式，通过链式的风格，让代码更加优雅，
+//即使继续打印4、5、6...也依旧风格清晰保持比较好的的可读性。
+</script>
+</body>
+</html>
